@@ -1,0 +1,44 @@
+backend/
+├── src/
+│   ├── auth/
+│   │   ├── auth.module.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.controller.ts
+│   │   ├── strategies/
+│   │   │   ├── jwt.strategy.ts
+│   │   │   └── local.strategy.ts
+│   │   ├── guards/
+│   │   │   ├── jwt-auth.guard.ts
+│   │   │   └── local-auth.guard.ts
+│   │   └── interfaces/
+│   │       └── jwt-payload.interface.ts
+│   ├── users/
+│   │   ├── users.module.ts
+│   │   ├── users.service.ts
+│   │   ├── users.controller.ts
+│   │   └── entities/
+│   │       └── user.entity.ts
+│   ├── chat/
+│   │   ├── chat.module.ts
+│   │   ├── chat.service.ts
+│   │   ├── chat.controller.ts
+│   │   └── entities/
+│   │       └── message.entity.ts
+│   ├── config/
+│   │   ├── database.config.ts
+│   │   ├── redis.config.ts
+│   │   └── s3.config.ts
+│   ├── common/
+│   │   ├── filters/
+│   │   │   └── http-exception.filter.ts
+│   │   ├── interceptors/
+│   │   │   └── transform.interceptor.ts
+│   │   └── decorators/
+│   │       └── get-user.decorator.ts
+│   ├── app.module.ts
+│   └── main.ts
+├── .env
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── README.md
