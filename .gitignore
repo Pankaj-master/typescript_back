@@ -45,9 +45,6 @@ Thumbs.db
 *.swp
 *.swo
 
-# Docker
-docker-compose.override.yml
-
 # Temporary folders
 tmp/
 temp/
