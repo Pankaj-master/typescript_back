@@ -40,6 +40,12 @@ export class TreatmentPlan {
   @Column({ type: 'json' })
   lifestyleRecommendations: string[];
 
+  @Column({ type: 'json', nullable: true })
+  yogaPranayama: string[];
+
+  @Column({ type: 'json', nullable: true })
+  panchakarmaTherapies: string[];
+
   @Column({ type: 'timestamp' })
   startDate: Date;
 

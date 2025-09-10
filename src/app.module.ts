@@ -4,7 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module'; // This should be correct
+import { AppointmentsModule } from './appointments/appointments.module';
+import { ClientsModule } from './clients/clients.module';
+import { TreatmentPlansModule } from './treatment-plans/treatment-plans.module';
 
 @Module({
   imports: [
@@ -27,7 +30,10 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
     }),
     UsersModule,
-    AuthModule,
+    AuthModule, // This should work now
+    AppointmentsModule,
+    ClientsModule,
+    TreatmentPlansModule,
   ],
   controllers: [AppController],
   providers: [AppService],

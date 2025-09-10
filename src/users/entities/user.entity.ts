@@ -2,6 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import * as bcrypt from 'bcrypt';
 import { Appointment } from '../../appointments/entities/appointment.entity';
 
+export type UserRole = 'practitioner' | 'patient' | 'admin';
+
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
@@ -19,8 +21,13 @@ export class User {
   @Column({ length: 100 })
   lastName: string;
 
-  @Column({ default: 'dietitian', length: 50 })
-  role: string;
+  // FIXED: Proper enum type for role
+  @Column({
+    type: 'enum',
+    enum: ['practitioner', 'patient', 'admin', 'dietitian'], // Added 'dietitian' role
+    default: 'patient'
+  })
+  role: UserRole;
 
   @Column({ default: true })
   isActive: boolean;

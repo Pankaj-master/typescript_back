@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
+import { UserRole } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,12 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { email: user.email, sub: user.id };
+    const payload = { 
+      email: user.email, 
+      sub: user.id,
+      role: user.role
+    };
+    
     return {
       access_token: this.jwtService.sign(payload),
       user: {
@@ -34,6 +40,9 @@ export class AuthService {
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       },
     };
   }
@@ -44,13 +53,38 @@ export class AuthService {
       throw new UnauthorizedException('User already exists');
     }
 
-    const user = await this.usersService.create(registerDto);
+    // Validate and set role
+    const validRoles: UserRole[] = ['practitioner', 'patient', 'admin'];
+    const role = validRoles.includes(registerDto.role) 
+      ? registerDto.role 
+      : 'patient';
+
+    const userData = {
+      ...registerDto,
+      role: role
+    };
+
+    const user = await this.usersService.create(userData);
     const { password, ...result } = user;
 
-    const payload = { email: user.email, sub: user.id };
+    const payload = { 
+      email: user.email, 
+      sub: user.id,
+      role: user.role
+    };
+    
     return {
       access_token: this.jwtService.sign(payload),
-      user: result,
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+      },
     };
   }
 }

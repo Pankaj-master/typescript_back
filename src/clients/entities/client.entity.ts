@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Appointment } from '../../appointments/entities/appointment.entity';
 
@@ -7,7 +7,7 @@ export class Client {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, { eager: true })
+  @OneToOne(() => User, { eager: true, cascade: true })
   @JoinColumn()
   user: User;
 
@@ -39,15 +39,18 @@ export class Client {
   @Column({ type: 'text', nullable: true })
   allergies: string;
 
+  @Column({ type: 'text', nullable: true })
+  medications: string;
+
   @Column({ default: true })
   isActive: boolean;
 
   @OneToMany(() => Appointment, appointment => appointment.client)
   appointments: Appointment[];
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn()
   updatedAt: Date;
 }
