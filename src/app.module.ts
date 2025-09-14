@@ -4,10 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module'; // This should be correct
+import { AuthModule } from './auth/auth.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { ClientsModule } from './clients/clients.module';
 import { TreatmentPlansModule } from './treatment-plans/treatment-plans.module';
+// --- NEW: Import the ChatbotModule we created ---
+import { ChatbotModule } from './chatbot/chatbot.module';
 
 @Module({
   imports: [
@@ -30,12 +32,15 @@ import { TreatmentPlansModule } from './treatment-plans/treatment-plans.module';
       inject: [ConfigService],
     }),
     UsersModule,
-    AuthModule, // This should work now
+    AuthModule,
     AppointmentsModule,
     ClientsModule,
     TreatmentPlansModule,
+    // --- NEW: Add the ChatbotModule to the imports array ---
+    ChatbotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
