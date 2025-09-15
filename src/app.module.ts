@@ -8,8 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { ClientsModule } from './clients/clients.module';
 import { TreatmentPlansModule } from './treatment-plans/treatment-plans.module';
-// --- NEW: Import the ChatbotModule we created ---
-import { ChatbotModule } from './chatbot/chatbot.module';
+import { ChatbotModule } from './chatbot/chatbot.module'; // <-- IMPORT CHATBOT MODULE
 
 @Module({
   imports: [
@@ -22,9 +21,9 @@ import { ChatbotModule } from './chatbot/chatbot.module';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
+        port: +configService.get<number>('DB_PORT'),
         username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
+        password: configService.get<string>('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: configService.get('NODE_ENV') !== 'production',
@@ -36,11 +35,9 @@ import { ChatbotModule } from './chatbot/chatbot.module';
     AppointmentsModule,
     ClientsModule,
     TreatmentPlansModule,
-    // --- NEW: Add the ChatbotModule to the imports array ---
-    ChatbotModule,
+    ChatbotModule, // <-- ADD CHATBOT MODULE HERE
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
